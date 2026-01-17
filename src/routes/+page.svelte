@@ -173,7 +173,7 @@
             onComplete: () => {
               // Clear GSAP transform so CSS animation can take over
               gsap.set(letter, { clearProps: "transform" });
-              // Add class to enable floating animation after letter is loaded
+              // Add class to mark letter as loaded (but don't animate yet)
               letter.classList.add('letter-loaded');
               lettersLoaded++;
               if (lettersLoaded === totalLetters) {
@@ -293,7 +293,7 @@
   
   <div class="loader">
     <div class="loader-content">
-      <div class="logo-text" bind:this={logoLetters}>
+      <div class="logo-text" bind:this={logoLetters} class:all-letters-ready={showTapPrompt}>
         <span class="logo-letter">L</span>
         <span class="logo-letter">A</span>
         <span class="logo-letter">W</span>
@@ -574,31 +574,43 @@
     transition: filter 0.3s ease;
   }
 
-  /* Apply floating and glowing animation only after letter is loaded */
-  .logo-letter.letter-loaded {
-    animation: floatGlow 3s ease-in-out infinite;
+  /* Apply floating and glowing animation only after ALL letters are loaded and tap prompt is shown */
+  .logo-text.all-letters-ready .logo-letter.letter-loaded {
+    animation: floatGlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   @keyframes floatGlow {
-    0%, 100% {
+    0% {
       transform: translateY(0);
       filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.3));
+    }
+    25% {
+      transform: translateY(-6px);
+      filter: drop-shadow(0 0 12px rgba(102, 126, 234, 0.5)) drop-shadow(0 0 20px rgba(118, 75, 162, 0.3));
     }
     50% {
       transform: translateY(-8px);
       filter: drop-shadow(0 0 16px rgba(102, 126, 234, 0.6)) drop-shadow(0 0 24px rgba(118, 75, 162, 0.4));
     }
+    75% {
+      transform: translateY(-6px);
+      filter: drop-shadow(0 0 12px rgba(102, 126, 234, 0.5)) drop-shadow(0 0 20px rgba(118, 75, 162, 0.3));
+    }
+    100% {
+      transform: translateY(0);
+      filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.3));
+    }
   }
 
-  /* Stagger the animation for each letter to create a wave effect */
-  .logo-letter.letter-loaded:nth-child(1) { animation-delay: 0s; }
-  .logo-letter.letter-loaded:nth-child(2) { animation-delay: 0.15s; }
-  .logo-letter.letter-loaded:nth-child(3) { animation-delay: 0.3s; }
-  .logo-letter.letter-loaded:nth-child(4) { animation-delay: 0.45s; }
-  .logo-letter.letter-loaded:nth-child(5) { animation-delay: 0.6s; }
-  .logo-letter.letter-loaded:nth-child(6) { animation-delay: 0.75s; }
-  .logo-letter.letter-loaded:nth-child(7) { animation-delay: 0.9s; }
-  .logo-letter.letter-loaded:nth-child(8) { animation-delay: 1.05s; }
+  /* Stagger the animation for each letter to create a smooth wave effect */
+  .logo-text.all-letters-ready .logo-letter.letter-loaded:nth-child(1) { animation-delay: 0s; }
+  .logo-text.all-letters-ready .logo-letter.letter-loaded:nth-child(2) { animation-delay: 0.2s; }
+  .logo-text.all-letters-ready .logo-letter.letter-loaded:nth-child(3) { animation-delay: 0.4s; }
+  .logo-text.all-letters-ready .logo-letter.letter-loaded:nth-child(4) { animation-delay: 0.6s; }
+  .logo-text.all-letters-ready .logo-letter.letter-loaded:nth-child(5) { animation-delay: 0.8s; }
+  .logo-text.all-letters-ready .logo-letter.letter-loaded:nth-child(6) { animation-delay: 1s; }
+  .logo-text.all-letters-ready .logo-letter.letter-loaded:nth-child(7) { animation-delay: 1.2s; }
+  .logo-text.all-letters-ready .logo-letter.letter-loaded:nth-child(8) { animation-delay: 1.4s; }
 
 
 
