@@ -525,10 +525,15 @@
   }
 
   .loader-content {
+    position: relative;
     text-align: center;
     width: 100%;
     overflow: visible;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .logo-text {
@@ -537,7 +542,7 @@
     align-items: center;
     flex-wrap: nowrap;
     gap: 0.3rem;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -547,6 +552,8 @@
     padding: 0 2rem;
     line-height: 1.2;
     white-space: nowrap;
+    position: relative;
+    z-index: 1;
   }
 
   .logo-letter {
@@ -564,18 +571,24 @@
 
 
   .tap-prompt {
+    position: absolute;
+    top: 100%;
     margin-top: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
     animation: fadeInUp 0.6s ease-out;
+    z-index: 2;
   }
 
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateX(-50%) translateY(20px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(-50%) translateY(0);
     }
   }
 
