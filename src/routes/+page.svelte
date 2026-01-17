@@ -8,8 +8,6 @@
   import Contact from "$lib/components/Contact.svelte";
   import heroImage from "$lib/assets/example.png";
 
-  gsap.registerPlugin(ScrollTrigger);
-
   let intro: HTMLElement;
   let content: HTMLElement;
   let heroText: HTMLElement;
@@ -134,6 +132,9 @@
   }
 
   onMount(() => {
+    // Register GSAP plugins (browser-only)
+    gsap.registerPlugin(ScrollTrigger);
+    
     // Set up 3D mouse and scroll tracking
     window.addEventListener('mousemove', handleGlobalMouseMove, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
