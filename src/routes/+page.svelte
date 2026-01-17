@@ -169,8 +169,12 @@
             y: 0,
             duration: 0.3,
             delay: index * 0.15,
-      ease: "power2.out",
+            ease: "power2.out",
             onComplete: () => {
+              // Clear GSAP transform so CSS animation can take over
+              gsap.set(letter, { clearProps: "transform" });
+              // Add class to enable floating animation after letter is loaded
+              letter.classList.add('letter-loaded');
               lettersLoaded++;
               if (lettersLoaded === totalLetters) {
                 showTapPrompt = true;
@@ -566,7 +570,35 @@
     opacity: 0;
     transform: translateY(30px);
     flex-shrink: 0;
+    filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.3));
+    transition: filter 0.3s ease;
   }
+
+  /* Apply floating and glowing animation only after letter is loaded */
+  .logo-letter.letter-loaded {
+    animation: floatGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes floatGlow {
+    0%, 100% {
+      transform: translateY(0);
+      filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.3));
+    }
+    50% {
+      transform: translateY(-8px);
+      filter: drop-shadow(0 0 16px rgba(102, 126, 234, 0.6)) drop-shadow(0 0 24px rgba(118, 75, 162, 0.4));
+    }
+  }
+
+  /* Stagger the animation for each letter to create a wave effect */
+  .logo-letter.letter-loaded:nth-child(1) { animation-delay: 0s; }
+  .logo-letter.letter-loaded:nth-child(2) { animation-delay: 0.15s; }
+  .logo-letter.letter-loaded:nth-child(3) { animation-delay: 0.3s; }
+  .logo-letter.letter-loaded:nth-child(4) { animation-delay: 0.45s; }
+  .logo-letter.letter-loaded:nth-child(5) { animation-delay: 0.6s; }
+  .logo-letter.letter-loaded:nth-child(6) { animation-delay: 0.75s; }
+  .logo-letter.letter-loaded:nth-child(7) { animation-delay: 0.9s; }
+  .logo-letter.letter-loaded:nth-child(8) { animation-delay: 1.05s; }
 
 
 
